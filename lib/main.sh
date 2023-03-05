@@ -71,7 +71,7 @@ source "${SRC}"/lib/distributions.sh                        # system specific in
 # shellcheck source=desktop.sh
 source "${SRC}"/lib/desktop.sh                              # desktop specific install
 # shellcheck source=compilation.sh
-source "${SRC}"/lib/compilation.sh                          # patching and compilation of kernel, uboot, ATF
+source "${SRC}"/lib/compilation.sh                          # patching and compilation of kernel, uboot, opensbi
 # shellcheck source=compilation-prepare.sh
 source "${SRC}"/lib/compilation-prepare.sh                  # drivers that are not upstreamed
 # shellcheck source=makeboarddeb.sh
@@ -411,7 +411,7 @@ branch2dir() {
 
 BOOTSOURCEDIR="${BOOTDIR}/$(branch2dir "${BOOTBRANCH}")"
 LINUXSOURCEDIR="${KERNELDIR}/$(branch2dir "${KERNELBRANCH}")"
-[[ -n $ATFSOURCE ]] && ATFSOURCEDIR="${ATFDIR}/$(branch2dir "${ATFBRANCH}")"
+[[ -n $OPENSBISOURCE ]] && OPENSBISOURCEDIR="${OPENSBIDIR}/$(branch2dir "${OPENSBIBRANCH}")"
 
 BSP_CLI_PACKAGE_NAME="armbian-bsp-cli-${BOARD}${EXTRA_BSP_NAME}"
 BSP_CLI_PACKAGE_FULLNAME="${BSP_CLI_PACKAGE_NAME}_${REVISION}_${ARCH}"
@@ -442,7 +442,7 @@ prepare_host
 if [[ $IGNORE_UPDATES != yes ]]; then
 	display_alert "Downloading sources" "" "info"
 	[[ -n $BOOTSOURCE ]] && fetch_from_repo "$BOOTSOURCE" "$BOOTDIR" "$BOOTBRANCH" "yes"
-	[[ -n $ATFSOURCE ]] && fetch_from_repo "$ATFSOURCE" "$ATFDIR" "$ATFBRANCH" "yes"
+	[[ -n $OPENSBISOURCE ]] && fetch_from_repo "$OPENSBISOURCE" "$OPENSBIDIR" "$OPENSBIBRANCH" "yes"
 
 	if [[ -n $KERNELSOURCE ]]; then
 		if $(declare -f var_origin_kernel >/dev/null); then
@@ -475,8 +475,8 @@ fi
 [[ "${BOOTCONFIG}" != "none" ]] && {
 	# Compile u-boot if packed .deb does not exist or use the one from repository
 	if [[ ! -f "${DEB_STORAGE}"/${CHOSEN_UBOOT}_${REVISION}_${ARCH}.deb ]]; then
-		if [[ -n "${ATFSOURCE}" && "${REPOSITORY_INSTALL}" != *u-boot* ]]; then
-			compile_atf
+		if [[ -n "${OPENSBISOURCE}" && "${REPOSITORY_INSTALL}" != *u-boot* ]]; then
+			compile_opensbi
 		fi
 		[[ "${REPOSITORY_INSTALL}" != *u-boot* ]] && compile_uboot
 	fi
