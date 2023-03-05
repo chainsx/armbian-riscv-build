@@ -1,0 +1,8 @@
+#!/bin/sh
+
+. /etc/armbian-release
+
+echo "update-initramfs: mv Initrd" >&2
+tempname="/boot/initrd.img-$1"
+ln -sf $(basename $tempname) /boot/uInitrd > /dev/null 2>&1 || mv $tempname /boot/uInitrd
+exit 0
