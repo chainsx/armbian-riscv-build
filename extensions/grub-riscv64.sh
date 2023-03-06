@@ -10,27 +10,17 @@ function extension_prepare_config__prepare_grub-riscv64() {
 	export GRUB_CMDLINE_LINUX_DEFAULT="${GRUB_CMDLINE_LINUX_DEFAULT:-}"          # Cmdline by default
 	export UEFI_ENABLE_BIOS_AMD64="${UEFI_ENABLE_BIOS_AMD64:-no}"               # Enable BIOS too if target is amd64
 	# User config overrides.
-	export BOOTCONFIG="none"                                                     # To try and convince lib/ to not build or install u-boot.
-	unset BOOTSOURCE                                                             # To try and convince lib/ to not build or install u-boot.
-	export IMAGE_PARTITION_TABLE="gpt"                                           # GPT partition table is essential for many UEFI-like implementations, eg Apple+Intel stuff.
+	# export BOOTCONFIG="none"                                                     # To try and convince lib/ to not build or install u-boot.
+	# unset BOOTSOURCE                                                             # To try and convince lib/ to not build or install u-boot.
+	export IMAGE_PARTITION_TABLE="msdos"                                           # GPT partition table is essential for many UEFI-like implementations, eg Apple+Intel stuff.
 	export UEFISIZE=256                                                          # in MiB - grub EFI is tiny - but some EFI BIOSes ignore small too small EFI partitions
 	export BOOTSIZE=0                                                            # No separate /boot when using UEFI.
 	export CLOUD_INIT_CONFIG_LOCATION="${CLOUD_INIT_CONFIG_LOCATION:-/boot/efi}" # use /boot/efi for cloud-init as default when using Grub.
 	export EXTRA_BSP_NAME="${EXTRA_BSP_NAME}-grub"                               # Unique bsp name.
 	export UEFI_GRUB_TARGET_BIOS=""                                              # Target for BIOS GRUB install, set to i386-pc when UEFI_ENABLE_BIOS_AMD64=yes and target is amd64
 
-	if [[ "${DISTRIBUTION}" == "Ubuntu" ]]; then
-	display_alert "Prepare config Ubuntu" "${EXTENSION}" "info"
-
+	display_alert "Prepare config " "${EXTENSION}" "info"
 	local uefi_packages="efibootmgr efivar cloud-initramfs-growroot os-prober grub-efi-${ARCH}-bin grub-efi-${ARCH}"
-
-	elif [[ "${DISTRIBUTION}" == "Debian" ]]; then
-	display_alert "Prepare Debian" "${EXTENSION}" "info"
-
-#	local uefi_packages="efibootmgr efivar cloud-initramfs-growroot os-prober grub-efi-${ARCH}-bin grub-efi-${ARCH}"
-	local uefi_packages=""
-
-	fi
 
 	DISTRO_KERNEL_PACKAGES=""
 	DISTRO_FIRMWARE_PACKAGES=""
@@ -107,4 +97,5 @@ configure_grub() {
 			GRUB_TERMINAL="${UEFI_GRUB_TERMINAL}"
 		grubCfgFragTerminal
 	fi
+
 }

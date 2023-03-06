@@ -48,14 +48,6 @@ compile_opensbi()
 	toolchain=$(find_toolchain "$OPENSBI_COMPILER" "$OPENSBI_USE_GCC")
 	[[ -z $toolchain ]] && exit_with_error "Could not find required toolchain" "${OPENSBI_COMPILER}gcc $OPENSBI_USE_GCC"
 
-	if [[ -n $OPENSBI_TOOLCHAIN2 ]]; then
-		local toolchain2_type toolchain2_ver toolchain2
-		toolchain2_type=$(cut -d':' -f1 <<< "${OPENSBI_TOOLCHAIN2}")
-		toolchain2_ver=$(cut -d':' -f2 <<< "${OPENSBI_TOOLCHAIN2}")
-		toolchain2=$(find_toolchain "$toolchain2_type" "$toolchain2_ver")
-		[[ -z $toolchain2 ]] && exit_with_error "Could not find required toolchain" "${toolchain2_type}gcc $toolchain2_ver"
-	fi
-
 # build aarch64
   fi
 
@@ -73,7 +65,7 @@ compile_opensbi()
 
 	echo -e "\n\t==  opensbi  ==\n" >> "${DEST}"/${LOG_SUBPATH}/compilation.log
 	# ENABLE_BACKTRACE="0" has been added to workaround a regression in opensbi.
-	eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${toolchain2}:${PATH}" \
+	eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${PATH}" \
 		'make PLATFORM=generic FW_PIC=y \
 		CROSS_COMPILE="$CCACHE $OPENSBI_COMPILER"' 2>> "${DEST}"/${LOG_SUBPATH}/compilation.log \
 		${PROGRESS_LOG_TO_FILE:+' | tee -a $DEST/${LOG_SUBPATH}/compilation.log'} \
@@ -88,8 +80,9 @@ compile_opensbi()
 	chmod 700 ${opensbitempdir}
 	trap "ret=\$?; rm -rf \"${opensbitempdir}\" ; exit \$ret" 0 1 2 3 15
 
-	f_src="${OPENSBISOURCEDIR}/build/platform/generic/firmware/fw_dynamic.bin"
-	[[ ! -f $f_src ]] && exit_with_error "opensbi file not found" "$(basename "${f_src}")"
+	f_src="${opensbidir}/build/platform/generic/firmware/fw_dynamic.bin"
+	[[ ! -f $f_src ]] && exit_with_error "opensbi file not found ${f_src}"
+	cp ${opensbidir}/build/platform/generic/firmware/fw_dynamic.bin $SRC/cache/sources/
 
 }
 
@@ -215,13 +208,17 @@ compile_uboot()
 		echo -e "\n\t== u-boot make $target_make ==\n" >> "${DEST}"/${LOG_SUBPATH}/compilation.log
 		eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${toolchain2}:${PATH}" \
 			'make $target_make $CTHREADS \
-			"${cross_compile}"' 2>>"${DEST}"/${LOG_SUBPATH}/compilation.log \
+			"${cross_compile}" OPENSBI=$SRC/cache/sources/fw_dynamic.bin' 2>>"${DEST}"/${LOG_SUBPATH}/compilation.log \
 			${PROGRESS_LOG_TO_FILE:+' | tee -a "${DEST}"/${LOG_SUBPATH}/compilation.log'} \
 			${OUTPUT_DIALOG:+' | dialog --backtitle "$backtitle" --progressbox "Compiling u-boot..." $TTY_Y $TTY_X'} \
 			${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'} ';EVALPIPE=(${PIPESTATUS[@]})'
 
 		[[ ${EVALPIPE[0]} -ne 0 ]] && exit_with_error "U-boot compilation failed"
-
+		
+		u_src="u-boot-sunxi-with-spl.bin"
+	    [[ ! -f $u_src ]] && exit_with_error "u-boot with spl file not found ${u_src}"
+		cp u-boot-sunxi-with-spl.bin $SRC/cache/sources
+		
 		[[ $(type -t uboot_custom_postprocess) == function ]] && uboot_custom_postprocess
 
 		# copy files to build directory

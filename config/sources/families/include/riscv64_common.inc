@@ -1,14 +1,14 @@
 ARCH=riscv64
-ATF_COMPILE="no"
+OPENSBI_COMPILE="yes"
 INITRD_ARCH="riscv"
 GOVERNOR="ondemand"
 NAME_KERNEL="Image"
-NAME_INITRD="Initrd"
+NAME_INITRD="uInitrd"
 MAIN_CMDLINE="rw no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes net.ifnames=0"
 KERNEL_IMAGE_TYPE=Image
 SKIP_BOOTSPLASH="yes"
 KERNELDIR="linux-riscv"
-#UEFI_GRUB_TARGET="riscv64-efi"
+UEFI_GRUB_TARGET="riscv64-efi"
 
 family_tweaks() {
 
