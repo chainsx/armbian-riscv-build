@@ -8,8 +8,7 @@ MAIN_CMDLINE="rw no_console_suspend consoleblank=0 fsck.fix=yes fsck.repair=yes 
 KERNEL_IMAGE_TYPE=Image
 SKIP_BOOTSPLASH="yes"
 KERNELDIR="linux-riscv"
-OFFSET=32
-UEFI_GRUB_TARGET="riscv64-efi"
+#UEFI_GRUB_TARGET="riscv64-efi"
 
 family_tweaks() {
 
