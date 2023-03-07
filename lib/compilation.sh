@@ -219,7 +219,8 @@ compile_uboot()
 		
 		u_src="u-boot-sunxi-with-spl.bin"
 	    [[ ! -f $u_src ]] && exit_with_error "u-boot with spl file not found ${u_src}"
-
+		cp u-boot-sunxi-with-spl.bin $SRC/cache/sources
+		
 		[[ $(type -t uboot_custom_postprocess) == function ]] && uboot_custom_postprocess
 
 		# copy files to build directory
