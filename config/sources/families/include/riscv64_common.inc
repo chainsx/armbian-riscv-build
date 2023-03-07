@@ -1,5 +1,5 @@
 ARCH=riscv64
-ATF_COMPILE="no"
+OPENSBI_COMPILE="yes"
 INITRD_ARCH="riscv"
 GOVERNOR="ondemand"
 NAME_KERNEL="Image"
