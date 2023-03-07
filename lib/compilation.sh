@@ -82,6 +82,7 @@ compile_opensbi()
 
 	f_src="${opensbidir}/build/platform/generic/firmware/fw_dynamic.bin"
 	[[ ! -f $f_src ]] && exit_with_error "opensbi file not found ${f_src}"
+	cp ${opensbidir}/build/platform/generic/firmware/fw_dynamic.bin $SRC/cache/sources/
 
 }
 
@@ -203,6 +204,8 @@ compile_uboot()
 		# workaround when two compilers are needed
 		cross_compile="CROSS_COMPILE=$UBOOT_COMPILER";
 		[[ -n $UBOOT_TOOLCHAIN2 ]] && cross_compile="ARMBIAN=foe"; # empty parameter is not allowed
+		
+		cp $SRC/cache/sources/fw_dynamic.bin .
 
 		echo -e "\n\t== u-boot make $target_make ==\n" >> "${DEST}"/${LOG_SUBPATH}/compilation.log
 		eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${toolchain2}:${PATH}" \
@@ -213,6 +216,9 @@ compile_uboot()
 			${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'} ';EVALPIPE=(${PIPESTATUS[@]})'
 
 		[[ ${EVALPIPE[0]} -ne 0 ]] && exit_with_error "U-boot compilation failed"
+		
+		u_src="u-boot-sunxi-with-spl.bin"
+	    [[ ! -f $u_src ]] && exit_with_error "u-boot with spl file not found ${u_src}"
 
 		[[ $(type -t uboot_custom_postprocess) == function ]] && uboot_custom_postprocess
 
