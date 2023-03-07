@@ -48,14 +48,6 @@ compile_opensbi()
 	toolchain=$(find_toolchain "$OPENSBI_COMPILER" "$OPENSBI_USE_GCC")
 	[[ -z $toolchain ]] && exit_with_error "Could not find required toolchain" "${OPENSBI_COMPILER}gcc $OPENSBI_USE_GCC"
 
-	if [[ -n $OPENSBI_TOOLCHAIN2 ]]; then
-		local toolchain2_type toolchain2_ver toolchain2
-		toolchain2_type=$(cut -d':' -f1 <<< "${OPENSBI_TOOLCHAIN2}")
-		toolchain2_ver=$(cut -d':' -f2 <<< "${OPENSBI_TOOLCHAIN2}")
-		toolchain2=$(find_toolchain "$toolchain2_type" "$toolchain2_ver")
-		[[ -z $toolchain2 ]] && exit_with_error "Could not find required toolchain" "${toolchain2_type}gcc $toolchain2_ver"
-	fi
-
 # build aarch64
   fi
 
@@ -73,9 +65,9 @@ compile_opensbi()
 
 	echo -e "\n\t==  opensbi  ==\n" >> "${DEST}"/${LOG_SUBPATH}/compilation.log
 	# ENABLE_BACKTRACE="0" has been added to workaround a regression in opensbi.
-	eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${toolchain2}:${PATH}" \
+	eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${PATH}" \
 		'make PLATFORM=generic FW_PIC=y \
-		CROSS_COMPILE="$CCACHE $OPENSBI_COMPILER"' 2>> "${DEST}"/${LOG_SUBPATH}/compilation.log \
+		CROSS_COMPILE="$OPENSBI_COMPILER"' 2>> "${DEST}"/${LOG_SUBPATH}/compilation.log \
 		${PROGRESS_LOG_TO_FILE:+' | tee -a $DEST/${LOG_SUBPATH}/compilation.log'} \
 		${OUTPUT_DIALOG:+' | dialog --backtitle "$backtitle" --progressbox "Compiling OPENSBI..." $TTY_Y $TTY_X'} \
 		${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'}
