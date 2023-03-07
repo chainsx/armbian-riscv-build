@@ -204,13 +204,11 @@ compile_uboot()
 		# workaround when two compilers are needed
 		cross_compile="CROSS_COMPILE=$UBOOT_COMPILER";
 		[[ -n $UBOOT_TOOLCHAIN2 ]] && cross_compile="ARMBIAN=foe"; # empty parameter is not allowed
-		
-		cp $SRC/cache/sources/fw_dynamic.bin .
 
 		echo -e "\n\t== u-boot make $target_make ==\n" >> "${DEST}"/${LOG_SUBPATH}/compilation.log
 		eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${toolchain2}:${PATH}" \
 			'make $target_make $CTHREADS \
-			"${cross_compile}"' 2>>"${DEST}"/${LOG_SUBPATH}/compilation.log \
+			"${cross_compile}" OPENSBI=$SRC/cache/sources/fw_dynamic.bin' 2>>"${DEST}"/${LOG_SUBPATH}/compilation.log \
 			${PROGRESS_LOG_TO_FILE:+' | tee -a "${DEST}"/${LOG_SUBPATH}/compilation.log'} \
 			${OUTPUT_DIALOG:+' | dialog --backtitle "$backtitle" --progressbox "Compiling u-boot..." $TTY_Y $TTY_X'} \
 			${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'} ';EVALPIPE=(${PIPESTATUS[@]})'
