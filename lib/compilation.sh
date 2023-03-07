@@ -67,7 +67,7 @@ compile_opensbi()
 	# ENABLE_BACKTRACE="0" has been added to workaround a regression in opensbi.
 	eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${PATH}" \
 		'make PLATFORM=generic FW_PIC=y \
-		CROSS_COMPILE="$OPENSBI_COMPILER"' 2>> "${DEST}"/${LOG_SUBPATH}/compilation.log \
+		CROSS_COMPILE="$CCACHE $OPENSBI_COMPILER"' 2>> "${DEST}"/${LOG_SUBPATH}/compilation.log \
 		${PROGRESS_LOG_TO_FILE:+' | tee -a $DEST/${LOG_SUBPATH}/compilation.log'} \
 		${OUTPUT_DIALOG:+' | dialog --backtitle "$backtitle" --progressbox "Compiling OPENSBI..." $TTY_Y $TTY_X'} \
 		${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'}
@@ -80,8 +80,8 @@ compile_opensbi()
 	chmod 700 ${opensbitempdir}
 	trap "ret=\$?; rm -rf \"${opensbitempdir}\" ; exit \$ret" 0 1 2 3 15
 
-	f_src="${OPENSBISOURCEDIR}/build/platform/generic/firmware/fw_dynamic.bin"
-	[[ ! -f $f_src ]] && exit_with_error "opensbi file not found" "$(basename "${f_src}")"
+	f_src="${opensbidir}/build/platform/generic/firmware/fw_dynamic.bin"
+	[[ ! -f $f_src ]] && exit_with_error "opensbi file not found ${f_src}"
 
 }
 
