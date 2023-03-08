@@ -1,7 +1,7 @@
 # RISC-V MangoPi MQ Pro
 BOARD_NAME="MangoPi MQ Pro"
 BOARDFAMILY="d1"
-KERNEL_TARGET="current,edge"
+KERNEL_TARGET="legacy,current,edge"
 FULL_DESKTOP="yes"
 BOOT_LOGO="desktop"
 BOOT_FDT_FILE="none"
