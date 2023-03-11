@@ -29,7 +29,7 @@ jobs:
     needs: prepare_release
     strategy:
       matrix:
-        BOARD: [nezha]
+        BOARD: [uefi-riscv64]
         DISTRO: [armbian]
         FLAVOR: [ubuntu]
         BRANCH: [edge]
