@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
 # This runs *after* user_config. Don't change anything not coming from other variables or meant to be configured by the user.
-# run_host_command_logged is the very basic, should be used for everything, but, please use helpers above, this is very low-level.
-function run_host_command_logged() {
-	raw_command="${raw_command:-"$*"}" run_host_command_logged_raw /bin/bash -e -o pipefail -c "$*"
-}
-
-function chroot_custom() {
-	local target=$1
-	shift
-	raw_command="$*" raw_extra="chroot_custom" TMPDIR="" run_host_command_logged_raw chroot "${target}" /bin/bash -e -o pipefail -c "$*"
-}
-
 function extension_prepare_config__prepare_grub-riscv64() {
 	display_alert "Prepare config" "${EXTENSION}" "info"
 	# Extension configuration defaults.
