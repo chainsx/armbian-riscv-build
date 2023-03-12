@@ -10,7 +10,7 @@
 
 ```bash
 apt-get -y install git
-git clone https://github.com/150balbes/build
+git clone https://github.com/chainsx/armbian-d1-build
 cd build
 ./compile.sh
 ```
