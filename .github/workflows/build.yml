@@ -29,7 +29,7 @@ jobs:
     needs: prepare_release
     strategy:
       matrix:
-        BOARD: [mangopi-mq-pro]
+        BOARD: [licheepi-4a]
         DISTRO: [armbian]
         FLAVOR: [ubuntu]
         BRANCH: [current]
