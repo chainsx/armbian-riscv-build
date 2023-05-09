@@ -36,8 +36,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master
       - name: Clean environment
         env:
           DEBIAN_FRONTEND: noninteractive
