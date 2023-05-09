@@ -1,4 +1,4 @@
-name: Build-ubuntu
+name: Build-debian
 on:
   workflow_dispatch:
 
@@ -31,7 +31,7 @@ jobs:
       matrix:
         BOARD: [licheepi-4a]
         DISTRO: [armbian]
-        FLAVOR: [ubuntu]
+        FLAVOR: [debian]
         BRANCH: [current]
     steps:
       - name: Checkout

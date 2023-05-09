@@ -33,7 +33,7 @@ sudo ./fastboot flash uboot ./images/u-boot-with-spl.bin
 ## 需要注意的事
 
 1.  目前系统支持正在做，遇到问题可以发 issue。
-2.  我把 cmdline 从官方 u-boot 里剥离出来以 u-boot env 的格式放在 /boot/config.txt 里，受支持的 u-boot env 可以添加进去。
+2.  对于 u-boot 的修改只是将 cmdline 从官方 u-boot 里剥离出来以 u-boot env 的格式放在 /boot/config.txt 里，受支持的 u-boot env 可以添加进去。
 
 ## 如何使用 EMMC 中的官方系统
 

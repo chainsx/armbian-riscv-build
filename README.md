@@ -17,9 +17,9 @@ cd build
 
 ### 目前支持的开发板
 
-1.  MangpiPi-MQ-Pro
+1.  MangpoPi-MQ-Pro
 
-2.  LicheePi-4A （8+8 内测版）
+2.  [LicheePi-4A （8+8 内测版）](./doc/licheepi-4a-install-guide.md)
 
 ### 构建参数举例
 
