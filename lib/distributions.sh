@@ -209,26 +209,6 @@ install_common()
 			fi
 		fi
 
-		# TODO: modify $bootscript_dst or testEnv.txt to make NFS boot universal
-		# instead of copying sunxi-specific template
-		if [[ $ROOTFS_TYPE == nfs ]]; then
-			display_alert "Copying NFS boot script template"
-			if [[ -f $USERPATCHES_PATH/nfs-boot.cmd ]]; then
-				cp "$USERPATCHES_PATH"/nfs-boot.cmd "${SDCARD}"/boot/boot.cmd
-			else
-				cp "${SRC}"/config/templates/nfs-boot.cmd.template "${SDCARD}"/boot/boot.cmd
-			fi
-		fi
-
-		[[ -n $OVERLAY_PREFIX && -f "${SDCARD}"/boot/testEnv.txt ]] && \
-			echo "overlay_prefix=$OVERLAY_PREFIX" >> "${SDCARD}"/boot/testEnv.txt
-
-		[[ -n $DEFAULT_OVERLAYS && -f "${SDCARD}"/boot/testEnv.txt ]] && \
-			echo "overlays=${DEFAULT_OVERLAYS//,/ }" >> "${SDCARD}"/boot/testEnv.txt
-
-		[[ -n $BOOT_FDT_FILE && -f "${SDCARD}"/boot/testEnv.txt ]] && \
-			echo "fdtfile=${BOOT_FDT_FILE}" >> "${SDCARD}/boot/testEnv.txt"
-
 	fi
 
 	# initial date for fake-hwclock

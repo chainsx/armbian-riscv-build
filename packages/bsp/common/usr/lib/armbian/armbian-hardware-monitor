@@ -68,8 +68,6 @@ log_hardware_info() {
 	dmesg >>${Log}
 	echo -e "\n### armbian-release:\n" >>${Log}
 	cat /etc/armbian-release >>${Log}
-	echo -e "\n### boot environment:\n" >>${Log}
-	cat /boot/testEnv.txt >>${Log} 2>/dev/null || grep -v "^#" /boot/boot.ini | sed '/^\s*$/d' >>${Log}
 	echo -e "\n### lsusb:\n" >>${Log}
 	lsusb 2>/dev/null >>${Log}
 	echo -e "\n### lscpu:\n" >>${Log}

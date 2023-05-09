@@ -701,58 +701,6 @@ PREPARE_IMAGE_SIZE
 	The loop device is mounted, so ${LOOP}p1 is it's first partition etc.
 	FORMAT_PARTITIONS
 
-	# stage: adjust boot script or boot environment
-	if [[ -f $SDCARD/boot/testEnv.txt ]]; then
-		if [[ $CRYPTROOT_ENABLE == yes ]]; then
-			echo "rootdev=$rootdevice cryptdevice=UUID=$(blkid -s UUID -o value ${LOOP}p${rootpart}):$ROOT_MAPPER" >> $SDCARD/boot/testEnv.txt
-		else
-			echo "rootdev=$rootfs" >> $SDCARD/boot/testEnv.txt
-		fi
-		echo "rootfstype=$ROOTFS_TYPE" >> $SDCARD/boot/testEnv.txt
-	elif [[ $rootpart != 1 ]]; then
-		local bootscript_dst=${BOOTSCRIPT##*:}
-#		sed -i 's/mmcblk0p1/mmcblk0p2/' $SDCARD/boot/$bootscript_dst
-#		sed -i -e "s/rootfstype=ext4/rootfstype=$ROOTFS_TYPE/" \
-#			-e "s/rootfstype \"ext4\"/rootfstype \"$ROOTFS_TYPE\"/" $SDCARD/boot/$bootscript_dst
-	fi
-
-	# if we have boot.ini = remove testEnv.txt and add UUID there if enabled
-	if [[ -f $SDCARD/boot/boot.ini ]]; then
-		sed -i -e "s/rootfstype \"ext4\"/rootfstype \"$ROOTFS_TYPE\"/" $SDCARD/boot/boot.ini
-		if [[ $CRYPTROOT_ENABLE == yes ]]; then
-			local rootpart="UUID=$(blkid -s UUID -o value ${LOOP}p${rootpart})"
-			sed -i 's/^setenv rootdev .*/setenv rootdev "\/dev\/mapper\/'$ROOT_MAPPER' cryptdevice='$rootpart':'$ROOT_MAPPER'"/' $SDCARD/boot/boot.ini
-		else
-			sed -i 's/^setenv rootdev .*/setenv rootdev "'$rootfs'"/' $SDCARD/boot/boot.ini
-		fi
-		if [[  $LINUXFAMILY != meson64 ]]; then
-			[[ -f $SDCARD/boot/testEnv.txt ]] && rm $SDCARD/boot/testEnv.txt
-		fi
-	fi
-
-	# if we have a headless device, set console to DEFAULT_CONSOLE
-	if [[ -n $DEFAULT_CONSOLE && -f $SDCARD/boot/testEnv.txt ]]; then
-		if grep -lq "^console=" $SDCARD/boot/testEnv.txt; then
-			sed -i "s/^console=.*/console=$DEFAULT_CONSOLE/" $SDCARD/boot/testEnv.txt
-		else
-			echo "console=$DEFAULT_CONSOLE" >> $SDCARD/boot/testEnv.txt
-	        fi
-	fi
-
-	# recompile .cmd to .scr if boot.cmd exists
-
-	if [[ -f $SDCARD/boot/boot.cmd ]]; then
-		if [ -z $BOOTSCRIPT_OUTPUT ]; then BOOTSCRIPT_OUTPUT=boot.scr; fi
-		mkimage -C none -A arm -T script -d $SDCARD/boot/boot.cmd $SDCARD/boot/$BOOTSCRIPT_OUTPUT > /dev/null 2>&1
-	fi
-
-
-	# create extlinux config
-	if [[ -f $SDCARD/boot/extlinux/extlinux.conf ]]; then
-		echo "  append root=$rootfs $SRC_CMDLINE $MAIN_CMDLINE" >> $SDCARD/boot/extlinux/extlinux.conf
-		[[ -f $SDCARD/boot/testEnv.txt ]] && rm $SDCARD/boot/testEnv.txt
-	fi
-
 } #############################################################################
 
 # update_initramfs

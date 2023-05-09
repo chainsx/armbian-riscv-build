@@ -362,40 +362,7 @@ prepare_board() {
 
 add_usb_storage_quirks() {
 
-	# check for /boot/testEnv.txt existence
-	[ -f /boot/testEnv.txt ] || return
-
-	# cleanup. add LF. This prevents adding parameters to the same line
-	echo "" >> /boot/testEnv.txt;  sed -i '/^$/d;$G' /boot/testEnv.txt; sed -i '/^$/d;$G' /boot/testEnv.txt
-
-	# cleanup. remove empty lines in the middle
-	sed -i '/^$/d' /boot/testEnv.txt
-
-	# preserve old contents if existent
-	TMPFILE=$(mktemp /tmp/${0##*/}.XXXXXX)
-	trap "sleep 1 ; rm \"${TMPFILE}\" ; exit 0" 0 1 2 3 15
-	awk -F"=" '/^usbstoragequirks/ {print $2}' </boot/testEnv.txt | tr -d -c '[:graph:]' >${TMPFILE}
-
-	# UAS blacklist Norelsys NS1068X and NS1066X since broken. Can be removed once
-	# they're blacklisted upstream
-	[ -s ${TMPFILE} ] || echo "0x2537:0x1066:u,0x2537:0x1068:u" >${TMPFILE}
-
-	# check for connected Seagate or WD HDD enclosures and blacklist them all
-	lsusb | awk -F" " '{print "0x"$6}' | sed 's/:/:0x/' | sort | uniq | while read ; do
-		case ${REPLY} in
-			"0x0bc2:"*|"0x1058:"*)
-				grep -q "${REPLY}" ${TMPFILE} || sed -i "1 s/\$/,${REPLY}:u/" ${TMPFILE}
-				;;
-		esac
-	done
-
-	read USBQUIRKS <${TMPFILE}
-	sed -i '/^usbstoragequirks/d' /boot/testEnv.txt
-	echo "usbstoragequirks=${USBQUIRKS}" >>/boot/testEnv.txt
-	sync &
-	if [ -f /sys/module/usb_storage/parameters/quirks ]; then
-		echo ${USBQUIRKS} >/sys/module/usb_storage/parameters/quirks
-	fi
+	echo "delete..."
 
 } # add_usb_storage_quirks
 
