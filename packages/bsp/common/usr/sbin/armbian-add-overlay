@@ -28,8 +28,8 @@ else
 	exit -1
 fi
 
-if [[ ! -f /etc/armbian-release || ! -f /boot/armbianEnv.txt ]]; then
-	echo >&2 "Armbian is not installed properly. Missing armbian-release or armbianEnv.txt"
+if [[ ! -f /etc/armbian-release || ! -f /boot/testEnv.txt ]]; then
+	echo >&2 "Armbian is not installed properly. Missing armbian-release or testEnv.txt"
 	exit -1
 fi
 
@@ -83,15 +83,15 @@ fi
 echo "Copying the compiled overlay file to /boot/overlay-user/"
 cp ${temp_dir}/${fname}.dtbo /boot/overlay-user/${fname}.dtbo
 
-if grep -q '^user_overlays=' /boot/armbianEnv.txt; then
-	line=$(grep '^user_overlays=' /boot/armbianEnv.txt | cut -d'=' -f2)
+if grep -q '^user_overlays=' /boot/testEnv.txt; then
+	line=$(grep '^user_overlays=' /boot/testEnv.txt | cut -d'=' -f2)
 	if grep -qE "(^|[[:space:]])${fname}([[:space:]]|$)" <<< $line; then
-		echo "Overlay ${fname} was already added to /boot/armbianEnv.txt, skipping"
+		echo "Overlay ${fname} was already added to /boot/testEnv.txt, skipping"
 	else
-		sed -i -e "/^user_overlays=/ s/$/ ${fname}/" /boot/armbianEnv.txt
+		sed -i -e "/^user_overlays=/ s/$/ ${fname}/" /boot/testEnv.txt
 	fi
 else
-	sed -i -e "\$auser_overlays=${fname}" /boot/armbianEnv.txt
+	sed -i -e "\$auser_overlays=${fname}" /boot/testEnv.txt
 fi
 
 echo "Reboot is required to apply the changes"

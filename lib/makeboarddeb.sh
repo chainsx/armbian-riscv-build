@@ -45,7 +45,7 @@ create_board_package()
 			  cp "${SRC}/config/bootscripts/${bootscript_src}" "${destination}/usr/share/armbian/${bootscript_dst}"
 			fi
 			[[ -n $BOOTENV_FILE && -f $SRC/config/bootenv/$BOOTENV_FILE ]] && \
-				cp "${SRC}/config/bootenv/${BOOTENV_FILE}" "${destination}"/usr/share/armbian/armbianEnv.txt
+				cp "${SRC}/config/bootenv/${BOOTENV_FILE}" "${destination}"/usr/share/armbian/testEnv.txt
 		fi
 	
 		# add configuration for setting uboot environment from userspace with: fw_setenv fw_printenv
@@ -215,11 +215,11 @@ create_board_package()
     rootdev=\$(sed -e 's/^.*root=//' -e 's/ .*\$//' < /proc/cmdline)
     rootfstype=\$(sed -e 's/^.*rootfstype=//' -e 's/ .*$//' < /proc/cmdline)
 
-    # recreate armbianEnv.txt if it and extlinux does not exists
-    if [ ! -f /boot/armbianEnv.txt ] && [ ! -f /boot/extlinux/extlinux.conf ]; then
-      cp /usr/share/armbian/armbianEnv.txt /boot  >/dev/null 2>&1
-      echo "rootdev="\$rootdev >> /boot/armbianEnv.txt
-      echo "rootfstype="\$rootfstype >> /boot/armbianEnv.txt
+    # recreate testEnv.txt if it and extlinux does not exists
+    if [ ! -f /boot/testEnv.txt ] && [ ! -f /boot/extlinux/extlinux.conf ]; then
+      cp /usr/share/armbian/testEnv.txt /boot  >/dev/null 2>&1
+      echo "rootdev="\$rootdev >> /boot/testEnv.txt
+      echo "rootfstype="\$rootfstype >> /boot/testEnv.txt
     fi
 
     [ -f /boot/boot.ini ] && sed -i "s/setenv rootdev.*/setenv rootdev \\"\$rootdev\\"/" /boot/boot.ini

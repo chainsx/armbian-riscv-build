@@ -702,13 +702,13 @@ PREPARE_IMAGE_SIZE
 	FORMAT_PARTITIONS
 
 	# stage: adjust boot script or boot environment
-	if [[ -f $SDCARD/boot/armbianEnv.txt ]]; then
+	if [[ -f $SDCARD/boot/testEnv.txt ]]; then
 		if [[ $CRYPTROOT_ENABLE == yes ]]; then
-			echo "rootdev=$rootdevice cryptdevice=UUID=$(blkid -s UUID -o value ${LOOP}p${rootpart}):$ROOT_MAPPER" >> $SDCARD/boot/armbianEnv.txt
+			echo "rootdev=$rootdevice cryptdevice=UUID=$(blkid -s UUID -o value ${LOOP}p${rootpart}):$ROOT_MAPPER" >> $SDCARD/boot/testEnv.txt
 		else
-			echo "rootdev=$rootfs" >> $SDCARD/boot/armbianEnv.txt
+			echo "rootdev=$rootfs" >> $SDCARD/boot/testEnv.txt
 		fi
-		echo "rootfstype=$ROOTFS_TYPE" >> $SDCARD/boot/armbianEnv.txt
+		echo "rootfstype=$ROOTFS_TYPE" >> $SDCARD/boot/testEnv.txt
 	elif [[ $rootpart != 1 ]]; then
 		local bootscript_dst=${BOOTSCRIPT##*:}
 #		sed -i 's/mmcblk0p1/mmcblk0p2/' $SDCARD/boot/$bootscript_dst
@@ -716,7 +716,7 @@ PREPARE_IMAGE_SIZE
 #			-e "s/rootfstype \"ext4\"/rootfstype \"$ROOTFS_TYPE\"/" $SDCARD/boot/$bootscript_dst
 	fi
 
-	# if we have boot.ini = remove armbianEnv.txt and add UUID there if enabled
+	# if we have boot.ini = remove testEnv.txt and add UUID there if enabled
 	if [[ -f $SDCARD/boot/boot.ini ]]; then
 		sed -i -e "s/rootfstype \"ext4\"/rootfstype \"$ROOTFS_TYPE\"/" $SDCARD/boot/boot.ini
 		if [[ $CRYPTROOT_ENABLE == yes ]]; then
@@ -726,16 +726,16 @@ PREPARE_IMAGE_SIZE
 			sed -i 's/^setenv rootdev .*/setenv rootdev "'$rootfs'"/' $SDCARD/boot/boot.ini
 		fi
 		if [[  $LINUXFAMILY != meson64 ]]; then
-			[[ -f $SDCARD/boot/armbianEnv.txt ]] && rm $SDCARD/boot/armbianEnv.txt
+			[[ -f $SDCARD/boot/testEnv.txt ]] && rm $SDCARD/boot/testEnv.txt
 		fi
 	fi
 
 	# if we have a headless device, set console to DEFAULT_CONSOLE
-	if [[ -n $DEFAULT_CONSOLE && -f $SDCARD/boot/armbianEnv.txt ]]; then
-		if grep -lq "^console=" $SDCARD/boot/armbianEnv.txt; then
-			sed -i "s/^console=.*/console=$DEFAULT_CONSOLE/" $SDCARD/boot/armbianEnv.txt
+	if [[ -n $DEFAULT_CONSOLE && -f $SDCARD/boot/testEnv.txt ]]; then
+		if grep -lq "^console=" $SDCARD/boot/testEnv.txt; then
+			sed -i "s/^console=.*/console=$DEFAULT_CONSOLE/" $SDCARD/boot/testEnv.txt
 		else
-			echo "console=$DEFAULT_CONSOLE" >> $SDCARD/boot/armbianEnv.txt
+			echo "console=$DEFAULT_CONSOLE" >> $SDCARD/boot/testEnv.txt
 	        fi
 	fi
 
@@ -750,7 +750,7 @@ PREPARE_IMAGE_SIZE
 	# create extlinux config
 	if [[ -f $SDCARD/boot/extlinux/extlinux.conf ]]; then
 		echo "  append root=$rootfs $SRC_CMDLINE $MAIN_CMDLINE" >> $SDCARD/boot/extlinux/extlinux.conf
-		[[ -f $SDCARD/boot/armbianEnv.txt ]] && rm $SDCARD/boot/armbianEnv.txt
+		[[ -f $SDCARD/boot/testEnv.txt ]] && rm $SDCARD/boot/testEnv.txt
 	fi
 
 } #############################################################################

@@ -264,9 +264,9 @@ create_armbian()
 		# old boot scripts
 		[[ -f "${TempDir}"/bootfs/boot/boot.cmd ]] && sed -e 's,root='"$root_uuid"',root='"$targetuuid"',g' -i "${TempDir}"/bootfs/boot/boot.cmd
 		# new boot scripts
-		if [[ -f "${TempDir}"/bootfs/boot/armbianEnv.txt ]]; then
-			sed -e 's,rootdev=.*,rootdev='"$targetuuid"',g' -i "${TempDir}"/bootfs/boot/armbianEnv.txt
-			grep -q '^rootdev' "${TempDir}"/bootfs/boot/armbianEnv.txt || echo "rootdev=$targetuuid" >> "${TempDir}"/bootfs/boot/armbianEnv.txt
+		if [[ -f "${TempDir}"/bootfs/boot/testEnv.txt ]]; then
+			sed -e 's,rootdev=.*,rootdev='"$targetuuid"',g' -i "${TempDir}"/bootfs/boot/testEnv.txt
+			grep -q '^rootdev' "${TempDir}"/bootfs/boot/testEnv.txt || echo "rootdev=$targetuuid" >> "${TempDir}"/bootfs/boot/testEnv.txt
 		else
 			[[ -f "${TempDir}"/bootfs/boot/boot.cmd ]] && sed -e 's,setenv rootdev.*,setenv rootdev '"$targetuuid"',g' -i "${TempDir}"/bootfs/boot/boot.cmd
 			[[ -f "${TempDir}"/bootfs/boot/boot.ini ]] && sed -e 's,^setenv rootdev.*$,setenv rootdev "'"$targetuuid"'",' -i "${TempDir}"/bootfs/boot/boot.ini
@@ -285,19 +285,19 @@ create_armbian()
 			echo "$emmcbootuuid	/media/mmcboot	ext4    ${mountopts[ext4]}" >> "${TempDir}"/rootfs/etc/fstab
 			echo "/media/mmcboot/boot   				/boot		none	bind								0       0" >> "${TempDir}"/rootfs/etc/fstab
 		fi
-		# if the rootfstype is not defined as cmdline argument on armbianEnv.txt
-		if ! grep -qE '^rootfstype=.*' "${TempDir}"/bootfs/boot/armbianEnv.txt; then
-			# Add the line of type of the selected rootfstype to the file armbianEnv.txt
-			[[ -f "${TempDir}"/bootfs/boot/armbianEnv.txt ]] && echo "rootfstype=$choosen_fs" >> "${TempDir}"/bootfs/boot/armbianEnv.txt
+		# if the rootfstype is not defined as cmdline argument on testEnv.txt
+		if ! grep -qE '^rootfstype=.*' "${TempDir}"/bootfs/boot/testEnv.txt; then
+			# Add the line of type of the selected rootfstype to the file testEnv.txt
+			[[ -f "${TempDir}"/bootfs/boot/testEnv.txt ]] && echo "rootfstype=$choosen_fs" >> "${TempDir}"/bootfs/boot/testEnv.txt
 		fi
 
 		if [[ $eMMCFilesystemChoosen =~ ^(btrfs|f2fs)$ ]]; then
 			echo "$targetuuid	/		$choosen_fs	${mountopts[$choosen_fs]}" >> "${TempDir}"/rootfs/etc/fstab
 			# swap file not supported under btrfs but we might have made a partition
 			[[ -n ${emmcswapuuid} ]] && sed -e 's,/var/swap.*,'$emmcswapuuid' 	none		swap	sw								0	0,g' -i "${TempDir}"/rootfs/etc/fstab
-			[[ -f "${TempDir}"/bootfs/boot/armbianEnv.txt ]] && sed -e 's,rootfstype=.*,rootfstype='$eMMCFilesystemChoosen',g' -i "${TempDir}"/bootfs/boot/armbianEnv.txt
+			[[ -f "${TempDir}"/bootfs/boot/testEnv.txt ]] && sed -e 's,rootfstype=.*,rootfstype='$eMMCFilesystemChoosen',g' -i "${TempDir}"/bootfs/boot/testEnv.txt
 		else
-			[[ -f "${TempDir}"/bootfs/boot/armbianEnv.txt ]] && sed -e 's,rootfstype=.*,rootfstype='$choosen_fs',g' -i "${TempDir}"/bootfs/boot/armbianEnv.txt
+			[[ -f "${TempDir}"/bootfs/boot/testEnv.txt ]] && sed -e 's,rootfstype=.*,rootfstype='$choosen_fs',g' -i "${TempDir}"/bootfs/boot/testEnv.txt
 			echo "$targetuuid	/		$choosen_fs	${mountopts[$choosen_fs]}" >> "${TempDir}"/rootfs/etc/fstab
 		fi
 
@@ -316,11 +316,11 @@ create_armbian()
 		[[ -f /boot/boot.cmd ]] && sed -e 's,root='"$root_uuid"',root='"$satauuid"',g' -i /boot/boot.cmd
 		[[ -f /boot/boot.ini ]] && sed -e 's,^setenv rootdev.*$,setenv rootdev "'"$satauuid"'",' -i /boot/boot.ini
 		# new boot scripts
-		if [[ -f /boot/armbianEnv.txt ]]; then
-			sed -e 's,rootdev=.*,rootdev='"$satauuid"',g' -i /boot/armbianEnv.txt
-			grep -q '^rootdev' /boot/armbianEnv.txt || echo "rootdev=$satauuid" >> /boot/armbianEnv.txt
-			sed -e 's,rootfstype=.*,rootfstype='$FilesystemChoosen',g' -i /boot/armbianEnv.txt
-			grep -q '^rootfstype' /boot/armbianEnv.txt || echo "rootfstype=$FilesystemChoosen" >> /boot/armbianEnv.txt
+		if [[ -f /boot/testEnv.txt ]]; then
+			sed -e 's,rootdev=.*,rootdev='"$satauuid"',g' -i /boot/testEnv.txt
+			grep -q '^rootdev' /boot/testEnv.txt || echo "rootdev=$satauuid" >> /boot/testEnv.txt
+			sed -e 's,rootfstype=.*,rootfstype='$FilesystemChoosen',g' -i /boot/testEnv.txt
+			grep -q '^rootfstype' /boot/testEnv.txt || echo "rootfstype=$FilesystemChoosen" >> /boot/testEnv.txt
 		else
 			sed -e 's,setenv rootdev.*,setenv rootdev '"$satauuid"',' -i /boot/boot.cmd
 			sed -e 's,setenv rootdev.*,setenv rootdev '"$satauuid"',' -i /boot/boot.ini
@@ -346,7 +346,7 @@ create_armbian()
 	# Boot from SPI, root = SATA / USB
 	#
 	if [[ $1 == *spi* ]]; then
-		sed -e 's,rootdev=.*,rootdev='"$satauuid"',g' -i "${TempDir}"/rootfs/boot/armbianEnv.txt
+		sed -e 's,rootdev=.*,rootdev='"$satauuid"',g' -i "${TempDir}"/rootfs/boot/testEnv.txt
 		echo "$satauuid	/		$FilesystemChoosen	${mountopts[$FilesystemChoosen]}" >> "${TempDir}"/rootfs/etc/fstab
 	fi
 

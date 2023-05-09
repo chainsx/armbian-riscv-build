@@ -61,8 +61,10 @@ jobs:
             mysql* \
             php*
           sudo -E apt-get update
-          sudo -E apt-get -y install build-essential gcc-riscv64-linux-gnu asciidoc binutils bzip2 gawk gettext git libncurses5-dev patch python2.7 unzip zlib1g-dev lib32gcc-s1 libc6-dev-i386 subversion flex node-uglify git gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync coreutils gcc g++ libreadline-dev ccache curl wget vim nano
-          sudo -E apt-get -y install python3 python3-pip python3-pyelftools haveged lrzsz scons ecj fastjar re2c xz-utils tar
+          sudo -E apt-get -y install build-essential gcc-riscv64-linux-gnu asciidoc binutils bzip2 gawk gettext git libncurses5-dev msmtp libssl-dev texinfo libglib2.0-dev
+          sudo -E apt-get -y install patch python2.7 unzip zlib1g-dev lib32gcc-s1 libc6-dev-i386 subversion flex node-uglify git gcc-multilib p7zip p7zip-full xmlto libreadline-dev
+          sudo -E apt-get -y install python3 python3-pip python3-pyelftools haveged lrzsz scons ecj fastjar re2c xz-utils tar binutils ccache curl wget vim nano rsync coreutils
+          sudo -E apt-get -y install qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig  gcc g++ 
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
       - name: Upload Armbian image

@@ -203,13 +203,13 @@ install_common()
 
 		if [[ -n $BOOTENV_FILE ]]; then
 			if [[ -f $USERPATCHES_PATH/bootenv/$BOOTENV_FILE ]]; then
-				cp "$USERPATCHES_PATH/bootenv/${BOOTENV_FILE}" "${SDCARD}"/boot/armbianEnv.txt
+				cp "$USERPATCHES_PATH/bootenv/${BOOTENV_FILE}" "${SDCARD}"/boot/testEnv.txt
 			elif [[ -f $SRC/config/bootenv/$BOOTENV_FILE ]]; then
-				cp "${SRC}/config/bootenv/${BOOTENV_FILE}" "${SDCARD}"/boot/armbianEnv.txt
+				cp "${SRC}/config/bootenv/${BOOTENV_FILE}" "${SDCARD}"/boot/testEnv.txt
 			fi
 		fi
 
-		# TODO: modify $bootscript_dst or armbianEnv.txt to make NFS boot universal
+		# TODO: modify $bootscript_dst or testEnv.txt to make NFS boot universal
 		# instead of copying sunxi-specific template
 		if [[ $ROOTFS_TYPE == nfs ]]; then
 			display_alert "Copying NFS boot script template"
@@ -220,14 +220,14 @@ install_common()
 			fi
 		fi
 
-		[[ -n $OVERLAY_PREFIX && -f "${SDCARD}"/boot/armbianEnv.txt ]] && \
-			echo "overlay_prefix=$OVERLAY_PREFIX" >> "${SDCARD}"/boot/armbianEnv.txt
+		[[ -n $OVERLAY_PREFIX && -f "${SDCARD}"/boot/testEnv.txt ]] && \
+			echo "overlay_prefix=$OVERLAY_PREFIX" >> "${SDCARD}"/boot/testEnv.txt
 
-		[[ -n $DEFAULT_OVERLAYS && -f "${SDCARD}"/boot/armbianEnv.txt ]] && \
-			echo "overlays=${DEFAULT_OVERLAYS//,/ }" >> "${SDCARD}"/boot/armbianEnv.txt
+		[[ -n $DEFAULT_OVERLAYS && -f "${SDCARD}"/boot/testEnv.txt ]] && \
+			echo "overlays=${DEFAULT_OVERLAYS//,/ }" >> "${SDCARD}"/boot/testEnv.txt
 
-		[[ -n $BOOT_FDT_FILE && -f "${SDCARD}"/boot/armbianEnv.txt ]] && \
-			echo "fdtfile=${BOOT_FDT_FILE}" >> "${SDCARD}/boot/armbianEnv.txt"
+		[[ -n $BOOT_FDT_FILE && -f "${SDCARD}"/boot/testEnv.txt ]] && \
+			echo "fdtfile=${BOOT_FDT_FILE}" >> "${SDCARD}/boot/testEnv.txt"
 
 	fi
 

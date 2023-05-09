@@ -795,8 +795,8 @@ display_alert "Building kernel splash logo" "$RELEASE" "info"
 	--blob "${SDCARD}"/tmp/throbber74.rgb \
 	"${SDCARD}"/lib/firmware/bootsplash.armbian >/dev/null 2>&1
 	if [[ $BOOT_LOGO == yes || $BOOT_LOGO == desktop && $BUILD_DESKTOP == yes ]]; then
-		[[ -f "${SDCARD}"/boot/armbianEnv.txt ]] &&	grep -q '^bootlogo' "${SDCARD}"/boot/armbianEnv.txt && \
-		sed -i 's/^bootlogo.*/bootlogo=true/' "${SDCARD}"/boot/armbianEnv.txt || echo 'bootlogo=true' >> "${SDCARD}"/boot/armbianEnv.txt
+		[[ -f "${SDCARD}"/boot/testEnv.txt ]] &&	grep -q '^bootlogo' "${SDCARD}"/boot/testEnv.txt && \
+		sed -i 's/^bootlogo.*/bootlogo=true/' "${SDCARD}"/boot/testEnv.txt || echo 'bootlogo=true' >> "${SDCARD}"/boot/testEnv.txt
 		[[ -f "${SDCARD}"/boot/boot.ini ]] &&	sed -i 's/^setenv bootlogo.*/setenv bootlogo "true"/' "${SDCARD}"/boot/boot.ini
 	fi
 	# enable additional services
