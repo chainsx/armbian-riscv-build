@@ -1535,7 +1535,7 @@ prepare_host()
 
 			local toolchain="https://github.com/chainsx/armbian-d1-build/releases/download/toolchain/Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz"
 			if [[ ! -d ${SRC}/cache/toolchain/gcc-toolchain/ ]]; then
-			    curl ${toolchain} >> "${SRC}/cache/toolchain/toolchain.tar.gz"
+			    wget ${toolchain} -O "${SRC}/cache/toolchain/toolchain.tar.gz"
 			    tar -zxvf "${SRC}/cache/toolchain/toolchain.tar.gz" -C ${SRC}/cache/toolchain/
 			    rm -rf "${SRC}"/cache/toolchain/*.tar.gz*
 			    mv ${SRC}/cache/toolchain/* ${SRC}/cache/toolchain/gcc-toolchain/
