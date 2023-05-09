@@ -1,72 +1,73 @@
-## 开始
+## Getting started
 
-### 环境准备
+### Prepare your environment
 
-- x64 内存不少于 2GB 和磁盘空间不少于 35GB 的 x64 主机或虚拟机，
-- Ubuntu Jammy 22.04 x64 或者使用 [Docker](https://docs.armbian.com/Developer-Guide_Building-with-Docker/) capable x64 / aarch64 Linux for containerised，
-- 具有 root 权限（能通过 sudo 认证的用户或者直接使用 root 用户运行）。
+- x64 / aarch64 machine with at least 2GB of memory and ~35GB of disk space for a VM, container or native OS,
+- Ubuntu Jammy 22.04 x64 or aarch64 for native building or any [Docker](https://docs.armbian.com/Developer-Guide_Building-with-Docker/) capable x64 / aarch64 Linux for containerised,
+- Superuser rights (configured sudo or root access).
 
-### 如何使用脚本
+### Simply start with the build script
 
 ```bash
 apt-get -y install git
-git clone https://github.com/chainsx/armbian-riscv-build
+git clone https://github.com/chainsx/armbian-d1-build
 cd build
 ./compile.sh
 ```
 
-### 目前支持的开发板
+<a href="#how-to-build-an-image-or-a-kernel"><img src=".github/README.gif" alt="Armbian logo" width="100%"></a>
 
-1.  MangpiPi-MQ-Pro
+- Interactive graphical interface.
+- The workspace will be prepared by installing the necessary dependencies and sources.
+- It guides the entire process until a kernel package or ready-to-use image of the SD card is created.
 
-2.  LicheePi-4A （8+8 内测版）
+### Build parameter examples
 
-### 构建参数举例
-
-以交互模式显示正在进行的工作：
+Show work in progress areas in interactive mode:
 
 ```bash
 ./compile.sh EXPERT="yes"
 ```
 
-在 Docker 容器里运行脚本：
+Run build framework inside Docker container:
 
 ```bash
 ./compile.sh docker
 ```
 
-压缩后的 Mangpi-MQ-Pro 构建命令如下：
+Build minimal CLI Armbian Focal image for Orangepi Zero. Use modern kernel and write image to the SD card:
 
-```
-        ./compile.sh \
-        BOARD=mangopi-mq-pro \
-        BRANCH=current \
-        RELEASE=jammy \
-        BUILD_MINIMAL=yes \
-        BUILD_DESKTOP=no \
-        KERNEL_ONLY=no \
-        KERNEL_CONFIGURE=no \
-        EXPERT=yes \
-        COMPRESS_OUTPUTIMAGE=sha,gpg,xz
-```
-
-压缩后的 LicheePi-4A 构建命令如下：
-
-```
-        ./compile.sh
-        BOARD=licheepi-4a
-        BRANCH=current
-        RELEASE=jammy
-        BUILD_MINIMAL=yes
-        BUILD_DESKTOP=no
-        KERNEL_ONLY=no
-        KERNEL_CONFIGURE=no
-        COMPRESS_OUTPUTIMAGE=sha,gpg,xz
+```bash
+./compile.sh \
+BOARD=orangepizero \
+BRANCH=current \
+RELEASE=focal \
+BUILD_MINIMAL=yes \
+BUILD_DESKTOP=no \
+KERNEL_ONLY=no \
+KERNEL_CONFIGURE=no \
+CARD_DEVICE="/dev/sda"
 ```
 
-[构建参数，高级构建选项，用户自定义配置，使用 Docker 构建？](https://docs.armbian.com/Developer-Guide_Build-Preparation/)
+[Build parameters, advanced build options, user defined configuration, build with Docker?](https://docs.armbian.com/Developer-Guide_Build-Preparation/)
 
-## 项目结构
+## Compare with industry standards
+
+Check similarity, advantages and disadvantages compared with leading industry standard build software.
+
+Function | Armbian | Yocto | Buildroot |
+|:--|:--|:--|:--|
+| Target | general purpose | embedded | embedded / IOT |
+| U-boot and kernel | compiled from sources | compiled from sources | compiled from sources |
+| Board support maintenance &nbsp; | complete | outside | outside |
+| Root file system | Debian or Ubuntu based| custom | custom |
+| Package manager | APT | any | none |
+| Configurability | limited | large | large |
+| Initramfs support | yes | yes | yes |
+| Getting started | quick | very slow | slow |
+| Cross compilation | yes | yes | yes |
+
+## Project structure
 
 ```text
 ├── cache                                Work / cache directory
@@ -118,6 +119,6 @@ cd build
     └── u-boot                           User: universal boot loader patches
 ```
 
-## 开放源代码许可
+## License
 
 This software is published under the GPL-2.0 License license.

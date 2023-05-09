@@ -41,14 +41,14 @@ compile_opensbi()
 
 	display_alert "Compiling opensbi" "" "info"
 
-# build aarch64
+# build riscv64
   if [[ $(dpkg --print-architecture) == amd64 ]] | [[ $(dpkg --print-architecture) == arm64 ]] ; then
 
 	local toolchain
 	toolchain=$(find_toolchain "$OPENSBI_COMPILER" "$OPENSBI_USE_GCC")
 	[[ -z $toolchain ]] && exit_with_error "Could not find required toolchain" "${OPENSBI_COMPILER}gcc $OPENSBI_USE_GCC"
 
-# build aarch64
+# build riscv64
   fi
 
 	display_alert "Compiler version" "${OPENSBI_COMPILER}gcc $(eval env PATH="${toolchain}:${PATH}" "${OPENSBI_COMPILER}gcc" -dumpversion)" "info"
@@ -110,7 +110,7 @@ compile_uboot()
 	display_alert "Compiling u-boot" "$version" "info"
 
 # build aarch64
-  if [[ $(dpkg --print-architecture) == amd64 ]] | [[ $(dpkg --print-architecture) == arm64 ]]; then
+  if [[ $(dpkg --print-architecture) == amd64 ]] | [[ $(dpkg --print-architecture) == riscv64 ]]; then
 
 	local toolchain
 	if [[ $ARCH = "riscv64" ]]; then
@@ -214,10 +214,13 @@ compile_uboot()
 			${OUTPUT_VERYSILENT:+' >/dev/null 2>/dev/null'} ';EVALPIPE=(${PIPESTATUS[@]})'
 
 		[[ ${EVALPIPE[0]} -ne 0 ]] && exit_with_error "U-boot compilation failed"
-		
+
+
 		u_src="u-boot-sunxi-with-spl.bin"
+		[[ ! -f $u_src ]] && u_src="u-boot-with-spl.bin"
+		
 	    [[ ! -f $u_src ]] && exit_with_error "u-boot with spl file not found ${u_src}"
-		cp u-boot-sunxi-with-spl.bin $SRC/cache/sources
+		cp u-boot*with-spl.bin $SRC/cache/sources
 		
 		[[ $(type -t uboot_custom_postprocess) == function ]] && uboot_custom_postprocess
 

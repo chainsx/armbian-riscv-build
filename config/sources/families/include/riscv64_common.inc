@@ -12,10 +12,10 @@ UEFI_GRUB_TARGET="riscv64-efi"
 
 family_tweaks() {
 
-#	if [[ $BOARD == starfive ]]; then
+	if [[ $BOARD == starfive ]]; then
 
 		install -m 644 $SRC/packages/blobs/riscv64/10-hdmi.conf $SDCARD/etc/X11/xorg.conf.d/10-hdmi.conf
 
-#	fi
+	fi
 
 }

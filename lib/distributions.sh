@@ -308,9 +308,17 @@ PRE_INSTALL_KERNEL_DEBS
 	# install kernel
 	[[ -n $KERNELSOURCE ]] && {
 		if [[ "${REPOSITORY_INSTALL}" != *kernel* ]]; then
-			VER=$(dpkg --info "${DEB_STORAGE}/${CHOSEN_KERNEL}_${REVISION}_${ARCH}.deb" | awk -F"-" '/Source:/{print $2}')
 
-			install_deb_chroot "${DEB_STORAGE}/${CHOSEN_KERNEL}_${REVISION}_${ARCH}.deb"
+			if [[ -f ${DEB_STORAGE}/${CHOSEN_KERNEL}_${REVISION}_${ARCH}.deb ]]; then
+				VER=$(dpkg --info ${DEB_STORAGE}/${CHOSEN_KERNEL}_${REVISION}_${ARCH}.deb | awk -F"-" '/Source:/{print $2}')
+				install_deb_chroot "${DEB_STORAGE}/${CHOSEN_KERNEL}_${REVISION}_${ARCH}.deb"
+			else
+				rm ${DEB_STORAGE}/*dbg*
+				IMAGE_DEB=$(ls ${DEB_STORAGE} | grep linux-image)
+				VER=$(dpkg --info ${DEB_STORAGE}/$IMAGE_DEB | awk -F"-" '/Source:/{print $2}')
+				install_deb_chroot ${DEB_STORAGE}/$IMAGE_DEB
+			fi
+			
 			if [[ -f ${DEB_STORAGE}/${CHOSEN_KERNEL/image/dtb}_${REVISION}_${ARCH}.deb ]]; then
 				install_deb_chroot "${DEB_STORAGE}/${CHOSEN_KERNEL/image/dtb}_${REVISION}_${ARCH}.deb"
 			fi
