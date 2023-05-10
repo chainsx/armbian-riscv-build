@@ -32,12 +32,18 @@ sudo ./fastboot flash uboot ./images/u-boot-with-spl.bin
 
 ## 需要注意的事
 
-1.  目前系统支持正在做，遇到问题可以发 issue。
+1.  目前系统正在完善，遇到问题可以发 issue。
 2.  对于 u-boot 的修改只是将 cmdline 从官方 u-boot 里剥离出来以 u-boot env 的格式放在 /boot/config.txt 里，受支持的 u-boot env 可以添加进去。
 
 ## 如何使用 EMMC 中的官方系统
 
-本项目提供的 u-boot 支持引导官方系统，将 SD 卡中的 /boot/config.txt 复制到 EMMC 的 boot 分区（第二分区），修改 `root=` 这项参数为 `mmcblk0p3`，关机，拔掉 SD 卡之后启动。
+本项目提供的 u-boot 支持引导官方系统，在 EMMC 的 boot 分区（第二分区）新建 config.txt 文件，添加以下内容，关机，拔掉 SD 卡之后启动。
+
+```
+fdt_file=light-lpi4a.dtb
+kernel_file=Image
+bootargs=console=ttyS0,115200 root=/dev/mmcblk0p3 rootfstype=ext4 rootwait rw earlycon clk_ignore_unused loglevel=7 eth=$ethaddr rootrwoptions=rw,noatime rootrwreset=yes init=/lib/systemd/systemd
+```
 
 ## u-boot 系统选择顺序
 

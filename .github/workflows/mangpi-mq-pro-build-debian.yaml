@@ -1,4 +1,4 @@
-name: Build-debian
+name: MangoPi-MQ-Pro-Build-debian
 on:
   workflow_dispatch:
 
@@ -29,7 +29,7 @@ jobs:
     needs: prepare_release
     strategy:
       matrix:
-        BOARD: [licheepi-4a]
+        BOARD: [mangopi-mq-pro]
         DISTRO: [armbian]
         FLAVOR: [debian]
         BRANCH: [current]

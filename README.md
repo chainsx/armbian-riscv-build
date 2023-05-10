@@ -3,7 +3,7 @@
 ### 环境准备
 
 - x64 内存不少于 2GB 和磁盘空间不少于 35GB 的 x64 主机或虚拟机，
-- Ubuntu Jammy 22.04 x64 或者使用 [Docker](https://docs.armbian.com/Developer-Guide_Building-with-Docker/) capable x64 / aarch64 Linux for containerised，
+- Ubuntu Jammy 22.04 x64 或者使用 [Docker](https://docs.armbian.com/Developer-Guide_Building-with-Docker/)，
 - 具有 root 权限（能通过 sudo 认证的用户或者直接使用 root 用户运行）。
 
 ### 如何使用脚本
@@ -105,8 +105,6 @@ cd build
 |   |   └── family-branch                Per kernel family and branch
 │   ├── misc                             Linux kernel packaging patches
 │   └── u-boot                           Universal boot loader patches
-|       ├── u-boot-board                 For specific board
-|       └── u-boot-family                For entire kernel family
 ├── tools                                Tools for dealing with kernel patches and configs
 └── userpatches                          User: configuration patching area
     ├── lib.config                       User: framework common config/override file
