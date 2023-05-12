@@ -1,4 +1,4 @@
-name: MangoPi-MQ-Pro-Build-debian
+name: MangoPi-MQ-Pro-Build-ubuntu
 on:
   workflow_dispatch:
 
