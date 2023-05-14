@@ -17,4 +17,3 @@ CPU_TEMP_OFFSET=0
 # Define where red color is used
 CPU_TEMP_LIMIT=60
 HDD_TEMP_LIMIT=60
-AMB_TEMP_LIMIT=40

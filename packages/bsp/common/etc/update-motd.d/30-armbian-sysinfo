@@ -24,7 +24,6 @@ CPU_TEMP_LIMIT=60
 # Temperature offset in Celcius degrees
 CPU_TEMP_OFFSET=0
 HDD_TEMP_LIMIT=60
-AMB_TEMP_LIMIT=40
 
 [[ -f /etc/default/armbian-motd ]] && . /etc/default/armbian-motd
 
@@ -33,12 +32,6 @@ for f in $MOTD_DISABLE; do
 done
 
 # don't edit below here
-
-# Include functions:
-# getboardtemp()
-# batteryinfo()
-# ambienttemp()
-source /usr/lib/armbian/armbian-allwinner-battery
 
 function display() {
 	# $1=name $2=value $3=red_limit $4=minimal_show_limit $5=unit $6=after $7=acs/desc{
@@ -88,12 +81,8 @@ function storage_info() {
 } # storage_info
 
 # query various systems and send some stuff to the background for overall faster execution.
-# Works only with ambienttemp and batteryinfo since A20 is slow enough :)
-amb_temp=$(ambienttemp &)
 ip_address=$(get_ip_addresses &)
-batteryinfo
 storage_info
-getboardtemp
 critical_load=80
 
 # get uptime, logged in users and load in one take
@@ -146,7 +135,6 @@ printf "IP:	       "
 printf "\x1B[92m%s\x1B[0m" "$ip_address"
 echo "" # fixed newline
 display "CPU temp" "$board_temp" $CPU_TEMP_LIMIT "0" "°C" ""
-display "Ambient temp" "$amb_temp" $AMB_TEMP_LIMIT "0" "°C" ""
 display "Usage of /" "$root_usage" "90" "1" "%" " of $root_total"
 echo "" # fixed newline
 a=0
