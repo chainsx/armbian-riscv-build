@@ -17,9 +17,19 @@ cd build
 
 ### 目前支持的开发板
 
+#### Thead TH1520
+
+1.  [LicheePi-4A （8+8 内测版）](./doc/licheepi-4a-install-guide.md)
+
+#### Allwinner D1
+
 1.  MangpoPi-MQ-Pro
 
-2.  [LicheePi-4A （8+8 内测版）](./doc/licheepi-4a-install-guide.md)
+2.  Lichee RV Dock
+
+3.  Dongshan Nezha Stu
+
+4.  Nezha
 
 ### 构建参数举例
 
