@@ -13,7 +13,6 @@ openssh-server
 parted
 psmisc
 python3-apt
-smartmontools
 sysfsutils
 toilet
 u-boot-tools

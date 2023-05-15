@@ -135,7 +135,6 @@ create_board_package()
 	#!/bin/sh
 	if [ remove = "\$1" ] || [ abort-install = "\$1" ]; then
 
-	    systemctl disable armbian-hardware-monitor.service armbian-hardware-optimize.service >/dev/null 2>&1
 	    systemctl disable armbian-zram-config.service armbian-ramlog.service >/dev/null 2>&1
 
 	fi
@@ -236,7 +235,7 @@ fi
 	fi
 
 	# Reload services
-	systemctl --no-reload enable armbian-hardware-monitor.service armbian-hardware-optimize.service armbian-zram-config.service >/dev/null 2>&1
+	systemctl --no-reload enable armbian-hardware-monitor.service armbian-zram-config.service >/dev/null 2>&1
 	exit 0
 	EOF
 
