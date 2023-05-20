@@ -25,9 +25,6 @@ gist
 gnome-font-viewer
 gnome-keyring
 gnome-packagekit
-gnome-software
-gnome-software-common
-gnome-software-doc
 gnome-system-monitor
 gnome-terminal
 greybird-gtk-theme
@@ -153,7 +150,6 @@ python3-openssl
 python3-socks
 redshift
 slick-greeter
-software-properties-gtk
 spice-vdagent
 terminator
 tumbler
@@ -165,12 +161,10 @@ udisks2
 update-inetd
 upower
 workrave-xfce4
-xapp
 xapps-common
 xarchiver
 xbacklight
 xcursor-themes
-xcvt
 xdg-dbus-proxy
 xdg-desktop-portal
 xdg-user-dirs

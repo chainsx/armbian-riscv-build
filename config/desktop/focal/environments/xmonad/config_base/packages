@@ -94,7 +94,6 @@ redshift
 rofi
 slick-greeter
 snapd
-software-properties-gtk
 spice-vdagent
 suckless-tools
 terminator
@@ -108,11 +107,9 @@ udisks2
 update-inetd
 upower
 vifm
-xapp
 xapps-common
 xbacklight
 xcursor-themes
-xcvt
 xdg-dbus-proxy
 xdg-desktop-portal
 xdg-user-dirs

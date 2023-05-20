@@ -28,9 +28,6 @@ gist
 gnome-bluetooth
 gnome-font-viewer
 gnome-power-manager
-gnome-software
-gnome-software-common
-gnome-software-doc
 gnome-system-monitor
 gnome-system-tools
 grun
@@ -112,7 +109,6 @@ rofi
 rox-filer
 slick-greeter
 spacefm
-software-properties-gtk
 spice-vdagent
 terminator
 totem
@@ -127,13 +123,10 @@ udisks2
 update-inetd
 upower
 wmctrl
-workrave-xfce4
-xapp
 xapps-common
 xarchiver
 xbacklight
 xcursor-themes
-xcvt
 xdg-dbus-proxy
 xdg-desktop-portal
 xdg-user-dirs

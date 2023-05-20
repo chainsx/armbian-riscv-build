@@ -72,7 +72,6 @@ python3-openssl
 python3-socks
 redshift
 slick-greeter
-software-properties-gtk
 spice-vdagent
 tumbler
 tracker
@@ -82,11 +81,9 @@ tree
 udisks2
 update-inetd
 upower
-xapp
 xapps-common
 xbacklight
 xcursor-themes
-xcvt
 xdg-dbus-proxy
 xdg-desktop-portal
 xdg-user-dirs
