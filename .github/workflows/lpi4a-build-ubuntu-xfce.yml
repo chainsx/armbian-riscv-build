@@ -1,4 +1,4 @@
-name: LicheePi-4A-Build-ubuntu
+name: LicheePi-4A-Build-ubuntu-xfce
 on:
   workflow_dispatch:
 
