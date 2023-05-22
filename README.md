@@ -18,6 +18,7 @@
 
 ### 预构建版本下载
 
+|  |  |  |
 | :----- | :----- | :----- |
 | LicheePi 4A | U-Boot  | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230522-0600/u-boot-with-spl.bin) |
 | LicheePi 4A | Ubuntu 20.04 xfce  | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230522-0600/Armbian_23.05.15-riscv_Licheepi-4a_focal_current_5.10.113_xfce_desktop.img.xz) |
