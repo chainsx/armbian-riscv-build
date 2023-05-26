@@ -162,7 +162,7 @@ compile_uboot()
 
 		# create patch for manual source changes
 		[[ $CREATE_PATCHES == yes ]] && userpatch_create "u-boot"
-		sed -i  's/YYLTYPE yylloc/extern YYLTYPE yylloc/g' scripts/dtc/dtc-lexer.l
+
 		if [[ -n $ATFSOURCE ]]; then
 			cp -Rv "${opensbitempdir}"/*.bin .
 			cp -Rv "${opensbitempdir}"/*.elf .
