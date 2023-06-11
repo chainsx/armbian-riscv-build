@@ -139,3 +139,5 @@ cd build
 ## 开放源代码许可
 
 This software is published under the GPL-2.0 License license.
+
+引用：[150balbes/build](https://github.com/150balbes/build)
