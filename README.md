@@ -4,7 +4,7 @@
 
 #### Thead TH1520
 
-1.  [LicheePi-4A （8+8 内测版）](./doc/licheepi-4a-install-guide.md)
+1.  [LicheePi-4A](./doc/licheepi-4a-install-guide.md)
 
 #### Allwinner D1
 
