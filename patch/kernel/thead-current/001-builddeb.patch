@@ -5,7 +5,7 @@
  	;;
  *)
 -	installed_image_path="boot/vmlinuz-$version"
-+	installed_image_path="boot/vmlinuz"
++	installed_image_path="boot/Image"
  esac
  
  BUILD_DEBUG=$(if_enabled_echo CONFIG_DEBUG_INFO Yes)

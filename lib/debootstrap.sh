@@ -701,6 +701,11 @@ PREPARE_IMAGE_SIZE
 	The loop device is mounted, so ${LOOP}p1 is it's first partition etc.
 	FORMAT_PARTITIONS
 
+	# create extlinux config
+	if [[ -f $SDCARD/boot/extlinux/extlinux.conf ]]; then
+		echo "  append root=$rootfs $SRC_CMDLINE $MAIN_CMDLINE" >> $SDCARD/boot/extlinux/extlinux.conf
+	fi
+
 } #############################################################################
 
 # update_initramfs
