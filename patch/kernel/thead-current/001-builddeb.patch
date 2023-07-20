@@ -13,7 +13,7 @@
  else
  	cp System.map "$tmpdir/boot/System.map-$version"
  	cp $KCONFIG_CONFIG "$tmpdir/boot/config-$version"
-+	cp ${srctree}/arch/$SRCARCH/boot/Image $tmpdir/boot/kernel.img
++	cp ${srctree}/arch/$SRCARCH/boot/Image $tmpdir/boot/Image
  fi
  cp "$($MAKE -s -f $srctree/Makefile image_name)" "$tmpdir/$installed_image_path"
  
