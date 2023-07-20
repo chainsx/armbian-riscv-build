@@ -16,16 +16,6 @@
 
 4.  Nezha
 
-### 预构建版本下载
-
-|  |  |  |
-| :----- | :----- | :----- |
-| LicheePi 4A | U-Boot  | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230708-1312/u-boot-with-spl.bin) |
-| LicheePi 4A | Ubuntu 20.04 xfce  | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230708-1312/Armbian_23.05.15-riscv_Licheepi-4a_focal_current_5.10.113_xfce_desktop.img.xz) |
-| LicheePi 4A | Ubuntu 22.04 server | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230708-1312/Armbian_23.05.15-riscv_Licheepi-4a_jammy_current_5.10.113.img.xz) |
-| LicheePi 4A | Debian 12 server | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230708-1312/Armbian_23.05.15-riscv_Licheepi-4a_sid_current_5.10.113.img.xz) |
-| MangoPi-MQ-Pro | Ubuntu 22.04 server | [下载链接](https://github.com/chainsx/armbian-riscv-build/releases/download/20230708-1312/Armbian_23.05.15-riscv_Mangopi-mq-pro_jammy_current_5.19.17.img.xz) |
-
 ### 环境准备
 
 - x64 内存不少于 2GB 和磁盘空间不少于 35GB 的 x64 主机或虚拟机，
