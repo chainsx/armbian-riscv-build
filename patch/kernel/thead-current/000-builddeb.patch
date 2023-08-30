@@ -1,15 +1,15 @@
---- a/scripts/package/builddeb	2023-05-09 16:06:29.561558772 +0800
-+++ b/scripts/package/builddeb	2023-05-09 16:05:43.656483000 +0800
-@@ -127,7 +127,7 @@
- 	installed_image_path="boot/vmlinux-$version"
+--- builddeb	2023-08-30 23:34:33.515646129 +0800
++++ builddeb.2	2023-08-30 23:35:59.386906141 +0800
+@@ -126,7 +126,7 @@
+ 	installed_image_path="usr/bin/linux-$version"
+ 	;;
+ parisc|mips|powerpc|riscv*)
+-	installed_image_path="boot/vmlinux-$version"
++	installed_image_path="boot/Image"
  	;;
  *)
--	installed_image_path="boot/vmlinuz-$version"
-+	installed_image_path="boot/Image"
- esac
- 
- BUILD_DEBUG=$(if_enabled_echo CONFIG_DEBUG_INFO Yes)
-@@ -146,13 +146,14 @@
+ 	installed_image_path="boot/vmlinuz-$version"
+@@ -149,13 +149,14 @@
  else
  	cp System.map "$tmpdir/boot/System.map-$version"
  	cp $KCONFIG_CONFIG "$tmpdir/boot/config-$version"
@@ -20,7 +20,7 @@
  if is_enabled CONFIG_OF_EARLY_FLATTREE; then
  	# Only some architectures with OF support have this target
  	if [ -d "${srctree}/arch/$SRCARCH/boot/dts" ]; then
--		$MAKE -f $srctree/Makefile INSTALL_DTBS_PATH="$tmpdir/usr/lib/$packagename" dtbs_install
+-		$MAKE -f $srctree/Makefile INSTALL_DTBS_PATH="$tmpdir/boot/dtbs/$packagename" dtbs_install
 +		$MAKE -f $srctree/Makefile INSTALL_DTBS_PATH="$tmpdir/boot/dtb" dtbs_install
  	fi
  fi
