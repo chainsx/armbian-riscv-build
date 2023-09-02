@@ -38,7 +38,7 @@ sudo ./fastboot flash uboot ./images/u-boot-with-spl.bin
     
     使用串口在 u-boot 倒计时读秒时使用 `Ctrl^C` 中断以进入 u-boot 命令行，然后输入以下指令：
     ```
-    ums 0 emmc 0
+    ums 0 mmc 0
     ```
     然后 EMMC 将会以 USB Mass Storage 设备映射在电脑上。
     
