@@ -28,8 +28,7 @@ create_chroot()
 	local release=$2
 	local arch=$3
 	declare -A qemu_binary apt_mirror components
-	qemu_binary['armhf']='qemu-arm-static'
-	qemu_binary['arm64']='qemu-aarch64-static'
+	qemu_binary['riscv64']='qemu-riscv64-static'
 	apt_mirror['buster']="$DEBIAN_MIRROR"
 	apt_mirror['bullseye']="$DEBIAN_MIRROR"
 	apt_mirror['sid']="$DEBIAN_MIRROR"
@@ -140,8 +139,7 @@ chroot_prepare_distccd()
 	gcc_version['bullseye']='9.2'
 	gcc_version['sid']='10.2'
 	gcc_version['jammy']='12'
-	gcc_type['armhf']='arm-linux-gnueabihf-'
-	gcc_type['arm64']='aarch64-linux-gnu-'
+	gcc_type['riscv64']='riscv64-linux-gnu-'
 	rm -f "${dest}"/cmdlist
 	mkdir -p "${dest}"
 	local toolchain_path
@@ -175,7 +173,7 @@ chroot_build_packages()
 	else
 		# only make packages for recent releases. There are no changes on older
 		target_release="bullseye focal jammy sid"
-		target_arch="armhf arm64 amd64"
+		target_arch="riscv64 amd64"
 	fi
 
 	for release in $target_release; do

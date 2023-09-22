@@ -40,7 +40,7 @@ if [[ -f "${SRC}"/lib/general.sh ]]; then
 else
 
 	echo "Error: missing build directory structure"
-	echo "Please clone the full repository https://github.com/armbian/build/"
+	echo "Please clone the full repository https://github.com/chainsx/armbian-riscv-build/"
 	exit 255
 
 fi

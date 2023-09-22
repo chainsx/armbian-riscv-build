@@ -2,8 +2,8 @@
 
 ### Prepare your environment
 
-- x64 / aarch64 machine with at least 2GB of memory and ~35GB of disk space for a VM, container or native OS,
-- Ubuntu Jammy 22.04 x64 or aarch64 for native building or any [Docker](https://docs.armbian.com/Developer-Guide_Building-with-Docker/) capable x64 / aarch64 Linux for containerised,
+- x64 machine with at least 2GB of memory and ~35GB of disk space for a VM, container or native OS,
+- Ubuntu Jammy 22.04 x64 or for native building or any [Docker](https://docs.armbian.com/Developer-Guide_Building-with-Docker/) capable x64 Linux for containerised,
 - Superuser rights (configured sudo or root access).
 
 ### Simply start with the build script

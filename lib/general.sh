@@ -1092,8 +1092,7 @@ repo-manipulate()
 
 		purge)
 			for release in "${DISTROS[@]}"; do
-				repo-remove-old-packages "$release" "armhf" "5"
-				repo-remove-old-packages "$release" "arm64" "5"
+				repo-remove-old-packages "$release" "riscv64" "5"
 				repo-remove-old-packages "$release" "amd64" "5"
 				repo-remove-old-packages "$release" "all" "5"
 				aptly -config="${SCRIPTPATH}config/${REPO_CONFIG}" -passphrase="${GPG_PASS}" publish update "${release}" > /dev/null 2>&1
@@ -1103,8 +1102,7 @@ repo-manipulate()
 
                 purgeedge)
                         for release in "${DISTROS[@]}"; do
-				repo-remove-old-packages "$release" "armhf" "3" "edge"
-				repo-remove-old-packages "$release" "arm64" "3" "edge"
+				repo-remove-old-packages "$release" "riscv64" "3" "edge"
 				repo-remove-old-packages "$release" "amd64" "3" "edge"
 				repo-remove-old-packages "$release" "all" "3" "edge"
 				aptly -config="${SCRIPTPATH}config/${REPO_CONFIG}" -passphrase="${GPG_PASS}" publish update "${release}" > /dev/null 2>&1
@@ -1383,8 +1381,8 @@ prepare_host()
 	build-essential  ca-certificates ccache cpio cryptsetup curl              \
 	debian-archive-keyring debian-keyring debootstrap device-tree-compiler    \
 	dialog dirmngr dosfstools dwarves f2fs-tools fakeroot flex gawk           \
-	gcc-arm-linux-gnueabi gcc-aarch64-linux-gnu gdisk gpg busybox             \
-	imagemagick jq kmod libbison-dev libc6-dev-armhf-cross libcrypto++-dev    \
+	gcc-riscv64-linux-gnu gdisk gpg busybox             \
+	imagemagick jq kmod libbison-dev libcrypto++-dev    \
 	libelf-dev libfdt-dev libfile-fcntllock-perl parallel libmpc-dev          \
 	libfl-dev liblz4-tool libncurses-dev libpython2.7-dev libssl-dev          \
 	libusb-1.0-0-dev linux-base locales lzop ncurses-base ncurses-term        \
@@ -1405,9 +1403,9 @@ prepare_host()
 
     fi
 
-  elif [[ $(dpkg --print-architecture) == arm64 ]]; then
+  elif [[ $(dpkg --print-architecture) == riscv64 ]]; then
 
-	hostdeps+=" gcc-arm-none-eabi libc6 libc6-amd64-cross qemu"
+	hostdeps+="libc6 libc6-amd64-cross qemu"
 
   else
 
@@ -1520,7 +1518,7 @@ prepare_host()
 	fi
 	mkdir -p "${DEST}"/debs-beta/extra "${DEST}"/debs/extra "${DEST}"/{config,debug,patch} "${USERPATCHES_PATH}"/overlay "${SRC}"/cache/{sources,hash,hash-beta,toolchain,utility,rootfs} "${SRC}"/.tmp
 
-# build aarch64
+# build riscv64
 	if [[ $(dpkg --print-architecture) == amd64 ]]; then
 		if [[ "${SKIP_EXTERNAL_TOOLCHAINS}" != "yes" ]]; then
 
@@ -1551,9 +1549,9 @@ prepare_host()
 	if [[ $KERNEL_ONLY != yes ]]; then
 		modprobe -q binfmt_misc
 		mountpoint -q /proc/sys/fs/binfmt_misc/ || mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
-		if [[ "$(arch)" != "aarch64" ]]; then
+		if [[ "$(arch)" != "riscv64" ]]; then
 			test -e /proc/sys/fs/binfmt_misc/qemu-arm || update-binfmts --enable qemu-arm
-			test -e /proc/sys/fs/binfmt_misc/qemu-aarch64 || update-binfmts --enable qemu-aarch64
+			test -e /proc/sys/fs/binfmt_misc/qemu-riscv64 || update-binfmts --enable qemu-riscv64
 		fi
 	fi
 
