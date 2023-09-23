@@ -50,7 +50,7 @@ if [[ "${QEMU_UBOOT_BOOTCONFIG}" != "" ]]; then
 	# Allowance for using the UEFI kernels, but not an UEFI bootloader, instead, use qemu with uboot.
 	# Used in the qemu-uboot-x86 and qemu-uboot-arm64 "boards".
 	display_alert "Using UEFI as base for qemu-uboot-${LINUXFAMILY}" "Using BOOTCONFIG: ${QEMU_UBOOT_BOOTCONFIG}" "debug"
-	declare -g ATF_COMPILE="no"
+	declare -g OPENSBI_COMPILE="no"
 	declare -g BOOTSCRIPT="boot-qemu-${LINUXFAMILY}.cmd:boot.cmd"
 	declare -g BOOTDIR="qemu-uboot-${LINUXFAMILY}"
 	declare -g BOOTBRANCH='tag:v2023.01'

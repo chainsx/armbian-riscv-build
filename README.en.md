@@ -101,7 +101,6 @@ Function | Armbian | Yocto | Buildroot |
 │   ├── bsp                              Scripts and configs overlay for rootfs
 │   └── extras-buildpkgs                 Optional compilation and packaging engine
 ├── patch                                Collection of patches
-│   ├── atf                              ARM trusted firmware
 │   ├── kernel                           Linux kernel patches
 |   |   └── family-branch                Per kernel family and branch
 │   ├── misc                             Linux kernel packaging patches
@@ -113,7 +112,6 @@ Function | Armbian | Yocto | Buildroot |
     ├── lib.config                       User: framework common config/override file
     ├── config-default.conf              User: default user config file
     ├── customize-image.sh               User: script will execute just before closing the image
-    ├── atf                              User: ARM trusted firmware
     ├── kernel                           User: Linux kernel per kernel family
     ├── misc                             User: various
     └── u-boot                           User: universal boot loader patches

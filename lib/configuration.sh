@@ -151,10 +151,10 @@ esac
 
 # Let's set default data if not defined in board configuration above
 [[ -z $OFFSET ]] && OFFSET=4 # offset to 1st partition (we use 4MiB boundaries by default)
-ARCH=armhf
+ARCH=riscv64
 KERNEL_IMAGE_TYPE=zImage
 CAN_BUILD_STRETCH=yes
-ATF_COMPILE=yes
+OPENSBI_COMPILE=yes
 [[ -z $CRYPTROOT_SSH_UNLOCK ]] && CRYPTROOT_SSH_UNLOCK=yes
 [[ -z $CRYPTROOT_SSH_UNLOCK_PORT ]] && CRYPTROOT_SSH_UNLOCK_PORT=2022
 # Default to pdkdf2, this used to be the default with cryptroot <= 2.0, however
@@ -412,7 +412,7 @@ SDCARD="${SRC}/.tmp/rootfs-${MOUNT_UUID}"
 MOUNT="${SRC}/.tmp/mount-${MOUNT_UUID}"
 DESTIMG="${SRC}/.tmp/image-${MOUNT_UUID}"
 
-[[ -n $ATFSOURCE && -z $ATF_USE_GCC ]] && exit_with_error "Error in configuration: ATF_USE_GCC is unset"
+[[ -n $OPENSBISOURCE && -z $ATF_USE_GCC ]] && exit_with_error "Error in configuration: ATF_USE_GCC is unset"
 [[ -z $UBOOT_USE_GCC ]] && exit_with_error "Error in configuration: UBOOT_USE_GCC is unset"
 [[ -z $KERNEL_USE_GCC ]] && exit_with_error "Error in configuration: KERNEL_USE_GCC is unset"
 

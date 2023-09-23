@@ -59,7 +59,6 @@ RUN apt-get update \
        kmod \
        libbison-dev \
        libc6-amd64-cross \
-       libc6-dev-armhf-cross \
        libfdt-dev \
        libelf-dev \
        libfile-fcntllock-perl \

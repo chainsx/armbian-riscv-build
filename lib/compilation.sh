@@ -163,7 +163,7 @@ compile_uboot()
 		# create patch for manual source changes
 		[[ $CREATE_PATCHES == yes ]] && userpatch_create "u-boot"
 
-		if [[ -n $ATFSOURCE ]]; then
+		if [[ -n $OPENSBISOURCE ]]; then
 			cp -Rv "${opensbitempdir}"/*.bin .
 			cp -Rv "${opensbitempdir}"/*.elf .
 			rm -rf "${opensbitempdir}"
