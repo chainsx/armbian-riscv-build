@@ -147,15 +147,6 @@ deploy_kernel_headers() {
 		fi
 	} > debian/hdrobjfiles
 
-	if is_native; then
-		echo "info: Build native: Skip headers-debian-byteshift.patch" >&2
-	elif is_build_on_amd64; then
-		(
-			cd $destdir
-			patch -p1 < /tmp/headers-debian-byteshift.patch
-		)
-	fi
-
 	tar -c -f - -C $srctree -T debian/hdrsrcfiles | tar -xf - -C $destdir
 	tar -c -f - -T debian/hdrobjfiles | tar -xf - -C $destdir
 	rm -f debian/hdrsrcfiles debian/hdrobjfiles

@@ -16,7 +16,6 @@
 # compile_kernel
 # compile_firmware
 # compile_armbian-config
-# compile_xilinx_bootgen
 # grab_version
 # find_toolchain
 # advanced_patch
@@ -163,11 +162,11 @@ compile_uboot()
 		# create patch for manual source changes
 		[[ $CREATE_PATCHES == yes ]] && userpatch_create "u-boot"
 
-		if [[ -n $OPENSBISOURCE ]]; then
-			cp -Rv "${opensbitempdir}"/*.bin .
-			cp -Rv "${opensbitempdir}"/*.elf .
-			rm -rf "${opensbitempdir}"
-		fi
+		#if [[ -n $OPENSBISOURCE ]]; then
+		#	cp -Rv "${opensbitempdir}"/*.bin .
+		#	cp -Rv "${opensbitempdir}"/*.elf .
+		#	rm -rf "${opensbitempdir}"
+		#fi
 
 		echo -e "\n\t== u-boot make $BOOTCONFIG ==\n" >> "${DEST}"/${LOG_SUBPATH}/compilation.log
 		eval CCACHE_BASEDIR="$(pwd)" env PATH="${toolchain}:${toolchain2}:${PATH}" \
@@ -431,9 +430,6 @@ Called after ${LINUXCONFIG}.config is put in place (.config).
 Before any olddefconfig any Kconfig make is called.
 A good place to customize the .config directly.
 CUSTOM_KERNEL_CONFIG
-
-	# hack for deb builder. To pack what's missing in headers pack.
-	cp "${SRC}"/patch/misc/headers-debian-byteshift.patch /tmp
 
 	if [[ $KERNEL_CONFIGURE != yes ]]; then
 		if [[ $BRANCH == default ]]; then
@@ -729,27 +725,6 @@ compile_armbian-config()
 	fakeroot dpkg-deb -b -Z${DEB_COMPRESS} "${tmp_dir}/${armbian_config_dir}" >/dev/null
 	rsync --remove-source-files -rq "${tmp_dir}/${armbian_config_dir}.deb" "${DEB_STORAGE}/"
 	rm -rf "${tmp_dir}"
-}
-
-compile_xilinx_bootgen()
-{
-	# Source code checkout
-	(fetch_from_repo "$GITHUB_SOURCE/Xilinx/bootgen.git" "xilinx-bootgen" "branch:master")
-
-	pushd "${SRC}"/cache/sources/xilinx-bootgen || exit
-
-	# Compile and install only if git commit hash changed
-	# need to check if /usr/local/bin/bootgen to detect new Docker containers with old cached sources
-	if [[ ! -f .commit_id || $(improved_git rev-parse @ 2>/dev/null) != $(<.commit_id) || ! -f /usr/local/bin/bootgen ]]; then
-		display_alert "Compiling" "xilinx-bootgen" "info"
-		make -s clean >/dev/null
-		make -s -j$(nproc) bootgen >/dev/null
-		mkdir -p /usr/local/bin/
-		install bootgen /usr/local/bin >/dev/null 2>&1
-		improved_git rev-parse @ 2>/dev/null > .commit_id
-	fi
-
-	popd
 }
 
 grab_version()
