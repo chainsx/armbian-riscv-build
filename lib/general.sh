@@ -1531,7 +1531,7 @@ prepare_host()
 			display_alert "Checking for external GCC compilers" "" "info"
 			# download external Linaro compiler and missing special dependencies since they are needed for certain sources
 
-			local toolchain="https://github.com/chainsx/armbian-d1-build/releases/download/toolchain/Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz"
+			local toolchain="${GITHUB_SOURCE}/chainsx/armbian-d1-build/releases/download/toolchain/Xuantie-900-gcc-linux-5.10.4-glibc-x86_64-V2.6.1-20220906.tar.gz"
 			if [[ ! -d ${SRC}/cache/toolchain/gcc-toolchain/ ]]; then
 			    wget ${toolchain} -O "${SRC}/cache/toolchain/toolchain.tar.gz"
 			    tar -zxf "${SRC}/cache/toolchain/toolchain.tar.gz" -C ${SRC}/cache/toolchain/

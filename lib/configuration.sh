@@ -412,7 +412,7 @@ SDCARD="${SRC}/.tmp/rootfs-${MOUNT_UUID}"
 MOUNT="${SRC}/.tmp/mount-${MOUNT_UUID}"
 DESTIMG="${SRC}/.tmp/image-${MOUNT_UUID}"
 
-[[ -n $OPENSBISOURCE && -z $ATF_USE_GCC ]] && exit_with_error "Error in configuration: ATF_USE_GCC is unset"
+[[ -n $OPENSBISOURCE && -z $OPENSBI_USE_GCC ]] && exit_with_error "Error in configuration: OPENSBI_USE_GCC is unset"
 [[ -z $UBOOT_USE_GCC ]] && exit_with_error "Error in configuration: UBOOT_USE_GCC is unset"
 [[ -z $KERNEL_USE_GCC ]] && exit_with_error "Error in configuration: KERNEL_USE_GCC is unset"
 

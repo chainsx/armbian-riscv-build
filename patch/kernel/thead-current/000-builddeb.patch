@@ -1,5 +1,5 @@
---- builddeb	2023-08-30 23:34:33.515646129 +0800
-+++ builddeb.2	2023-08-30 23:35:59.386906141 +0800
+--- a/scripts/package/builddeb
++++ b/scripts/package/builddeb
 @@ -126,7 +126,7 @@
  	installed_image_path="usr/bin/linux-$version"
  	;;
