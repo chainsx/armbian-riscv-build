@@ -28,7 +28,7 @@
 
 ```bash
 apt-get -y install git
-git clone https://github.com/chainsx/armbian-riscv-build
+git clone https://github.com/lily-Robot/rvbian-build.git build
 cd build
 ./compile.sh
 ```
@@ -38,7 +38,7 @@ cd build
 以交互模式显示正在进行的工作：
 
 ```bash
-./compile.sh EXPERT="yes"
+/compile.sh EXPERT="yes"
 ```
 
 在 Docker 容器里运行脚本：
