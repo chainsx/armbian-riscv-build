@@ -75,4 +75,4 @@ jobs:
           board: ${{ matrix.BOARD }}
           flavor: ${{ matrix.FLAVOR }}
           release-id: ${{ needs.prepare_release.outputs.release_id }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GT_TOKEN }}
