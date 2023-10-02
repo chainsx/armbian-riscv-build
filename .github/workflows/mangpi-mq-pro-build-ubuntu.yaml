@@ -70,7 +70,7 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
       - name: Upload Armbian image
-        uses: chainsx/armbian-compile-action@risc-v
+        uses: lily-Robot/armbian-compile-action@risc-v
         if: matrix.DISTRO == 'armbian'
         with:
           branch: ${{ matrix.BRANCH }}
