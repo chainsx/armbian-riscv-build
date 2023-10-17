@@ -1,4 +1,4 @@
-#### 注意：本项目已经改得和 armbian 可以说是没什么关系了，，，不过名字还没想好，不如叫 rvbian（（（
+#### 注意：本项目已经改得和 armbian 可以说是没什么关系了，，，不过名字还没想好，不如叫光轮疾风漆黑矢零式（（（
 
 ## 开始
 
@@ -28,7 +28,7 @@
 
 ```bash
 apt-get -y install git
-git clone https://github.com/lily-Robot/rvbian-build.git build
+git clone https://github.com/chainsx/armbian-riscv-build
 cd build
 ./compile.sh
 ```
@@ -38,7 +38,7 @@ cd build
 以交互模式显示正在进行的工作：
 
 ```bash
-/compile.sh EXPERT="yes"
+./compile.sh EXPERT="yes"
 ```
 
 在 Docker 容器里运行脚本：
