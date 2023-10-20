@@ -58,10 +58,12 @@ SD 优先于 EMMC
 
 ## Armbian 支持情况
 
-GPU: ~~想都别想~~
+GPU: Work In Progress.
 
 风扇：支持
 
 桌面：在没有 GPU 驱动的情况下使用 xfce 桌面，Ubuntu 20.04 能流畅使用，Ubuntu 22.04 有明显卡顿情况。
 
-Armbian 官方支持：已经提交到官方仓库，但是是不可能使用优化编译工具链的，，，
+[Armbian 官方构建框架](https://github.com/armbian/build)支持：已经提交到官方仓库，但是是不可能使用优化编译工具链的，，，
+
+[Armbian 官方构建框架](https://github.com/armbian/build)预构建版本：[由 GitHub Action 自动构建](https://github.com/chainsx/image-armbian-licheepi-4a/releases)
