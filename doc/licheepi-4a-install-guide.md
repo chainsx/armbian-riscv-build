@@ -67,3 +67,7 @@ GPU: Work In Progress.
 [Armbian 官方构建框架](https://github.com/armbian/build)支持：已经提交到官方仓库，但是是不可能使用优化编译工具链的，，，
 
 [Armbian 官方构建框架](https://github.com/armbian/build)预构建版本：[由 GitHub Action 自动构建](https://github.com/chainsx/image-armbian-licheepi-4a/releases)
+
+## 我想给 Armbian 官方构建仓库提 PR
+
+欢迎向 [Armbian 官方构建仓库](https://github.com/armbian/build)提交 PR，如果是关于 LicheePi 4A 的，请在 reviewers 选择 `chainsx`，并及时通知我。
