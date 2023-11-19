@@ -7,7 +7,7 @@
 1.  到本项目 [Release](https://github.com/chainsx/armbian-riscv-build/releases) 下载适用于 LicheePi 4A 的系统，可以选择 Debian 或 Ubuntu。
 2.  到 [chainsx/thead-u-boot Actions](https://github.com/chainsx/thead-u-boot/actions) 或者其他使用该源码仓库的项目例如 [chainsx/fedora-riscv-builder](https://github.com/chainsx/fedora-riscv-builder/releases) 下载适用于对应内存版本 LicheePi 4A 引导 SD 卡镜像的 u-boot.
 
-**其他使用 https://github.com/chainsx/thead-u-boot 的系统都是按照以下方式进行刷写**
+**其他使用 `https://github.com/chainsx/thead-u-boot` 的系统都是按照以下方式进行刷写**
 
 ### 2.  刷写 u-boot 到 EMMC （必须）
 
